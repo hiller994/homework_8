@@ -5,7 +5,7 @@ from tkinter.font import names
 
 import pytest
 
-from homework.models import Product
+from homework.models import Product, QUANTITY_OF_REQUESTED_PRODUCTS
 
 
 @pytest.fixture
@@ -20,7 +20,8 @@ class TestProducts:
     """
 
     def test_product_check_quantity(self, product): #проверяем кол-во
-        assert Product.check_quantity(self, product.quantity)
+        assert product.check_quantity(QUANTITY_OF_REQUESTED_PRODUCTS)
+        #Как вывести отрицательный результат? что
         # TODO напишите проверки на метод check_quantity
         #pass
 

@@ -1,6 +1,7 @@
 #quantity of requested products
-QUANTITY_OF_REQUESTED_PRODUCTS = 100000 #количество запрашиваемой продукции
+QUANTITY_OF_REQUESTED_PRODUCTS = 999 #количество запрашиваемой продукции
 
+#@dataclass #dataclass говорит, что абстракция USERS это абстракция над данными, а если это данные, мы можем совершать операции (и не нужно писать функции сравнения и т.п.)
 class Product:
     """
     Класс продукта (есть некий продукт)
@@ -17,12 +18,12 @@ class Product:
         self.quantity = quantity
 
     def check_quantity(self, quantity) -> bool: #проверка количества, если кол-во товара достаточное, то TRUE, если нет, то FALSE
-        assert quantity >= QUANTITY_OF_REQUESTED_PRODUCTS# , f"{Product.name} >= {QUANTITY_OF_REQUESTED_PRODUCTS}" #проверяем, что кол-во товара >= запрашиваемого
+        return self.quantity >= quantity #метод будет возвращать True, если количество товара на складе (self.quantity) больше или равно запрошенному количеству (quantity), и False в противном случае.
         """
         TODO Верните True если количество продукта больше или равно запрашиваемому
             и False в обратном случае
         """
-        #raise NotImplementedError
+        raise NotImplementedError
 
     def buy(self, quantity): #покупка - вычитает какое-то кол-во товара, которое лежит на складе
         """
@@ -32,8 +33,8 @@ class Product:
         """
         raise NotImplementedError
 
-    def __hash__(self):
-        return hash(self.name + self.description)
+    #def __hash__(self):
+    #   return hash(self.name + self.description)
 
 
 class Cart:
