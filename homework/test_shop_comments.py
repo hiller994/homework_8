@@ -78,16 +78,18 @@ class TestCart: #тест корзины
     def test_get_total_price(self, cart, product, product2): # посчитать цену всех товаров в корзине
         quantity1 = 10  # Количество первого продукта
         quantity2 = 20  # Количество второго продукта
+        #add_count_milk = 2
         cart.add_product(product, buy_count=quantity1)
         cart.add_product(product2, buy_count=quantity2)
 
-        assert cart.get_total_price() == 2000 # общая цена, пересчитать руками (100 * 10) + (50 * 20) = 1000 + 1000 = 2000
+        assert cart.get_total_price() == 2000 # общая цена: (100 * 10) + (50 * 20) = 1000 + 1000 = 2000
 
     def test_buy(self, cart, product,  product2): # купить все товары в корзине
         quantity1 = 10  # Количество первого продукта
         quantity2 = 20  # Количество второго продукта
+        # add_count_milk = 2
         cart.add_product(product, buy_count=quantity1)
         cart.add_product(product2, buy_count=quantity2)
         cart.buy()
-        assert product.quantity == 990 #остатки стока1
-        assert product2.quantity == 80 #остатки стока2
+        assert product.quantity == 990 #остатки стока
+        assert product2.quantity == 80 #остатки стока

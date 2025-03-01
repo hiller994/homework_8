@@ -1,5 +1,7 @@
-QUANTITY_OF_REQUESTED_PRODUCTS = 800
+#quantity of requested products
+QUANTITY_OF_REQUESTED_PRODUCTS = 800 #количество запрашиваемой продукции
 
+#@dataclass #dataclass говорит, что абстракция USERS это абстракция над данными, а если это данные, мы можем совершать операции (и не нужно писать функции сравнения и т.п.)
 class Product:
     """
     Класс продукта (есть некий продукт)
@@ -15,14 +17,17 @@ class Product:
         self.description = description
         self.quantity = quantity
 
-    def check_quantity(self, quantity) -> bool:
-        return (quantity <= self.quantity)
+    def check_quantity(self, quantity) -> bool: #проверка количества, если кол-во товара достаточное, то TRUE, если нет, то FALSE
+        return self.quantity >= quantity #метод будет возвращать True, если количество товара на складе (self.quantity) больше или равно запрошенному количеству (quantity), и False в противном случае.
         """
         TODO Верните True если количество продукта больше или равно запрашиваемому
             и False в обратном случае
         """
+        raise NotImplementedError #Команда raise в Python используется для принудительного вызова исключения
 
-    def buy(self, quantity):
+    def buy(self, quantity): #покупка - вычитает какое-то кол-во товара, которое лежит на складе
+        #ValueError — операция или функция получает аргумент неподходящего значения. К примеру, исключение возникает, если попытаться преобразовать строку в число.
+
         if self.check_quantity(quantity): #если выполняются условия функции
             self.quantity -= quantity # то количество товара на складе уменьшается на количество купленного товара
             return self.quantity
@@ -34,6 +39,10 @@ class Product:
             Проверьте количество продукта используя метод check_quantity
             Если продуктов не хватает, то выбросите исключение ValueError
         """
+        #raise NotImplementedError
+    #def __hash__(self):
+    #   return hash(self.name + self.description)
+
 
 class Cart:
     """
@@ -58,6 +67,7 @@ class Cart:
         Метод добавления продукта в корзину.
         Если продукт уже есть в корзине, то увеличиваем количество
         """
+        #raise NotImplementedError
 
     def remove_product(self, product: Product, remove_count=None):
         """
@@ -69,17 +79,18 @@ class Cart:
             del self.products[product]
         else:
             self.products[product] -= remove_count
+        #raise NotImplementedError
 
     def clear(self): #очистить всю корзину
         self.products = {}
-
+        #raise NotImplementedError
 
     def get_total_price(self) -> float: #можешь посчитать цену всех товаров в корзине
         total_price = 0 #изначальный итог 0
         for product, quantity in self.products.items(): #для каждого продукта из словаря
             total_price += product.price * quantity  #складывается цену продуктов, записывая в переменную total_price
         return total_price
-
+        #raise NotImplementedError
 
     def buy(self): #можем купить все товары в корзине
         """
