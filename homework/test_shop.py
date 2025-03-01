@@ -21,15 +21,19 @@ class TestProducts:
 
     def test_product_check_quantity(self, product): #проверяем кол-во
         assert product.check_quantity(QUANTITY_OF_REQUESTED_PRODUCTS)
-        #Как вывести отрицательный результат? что
         # TODO напишите проверки на метод check_quantity
         #pass
 
     def test_product_buy(self, product): #пытаемся купить продукт
+        in_stock = product.quantity
+        product.buy(QUANTITY_OF_REQUESTED_PRODUCTS)
+        assert product.quantity == in_stock - QUANTITY_OF_REQUESTED_PRODUCTS
         # TODO напишите проверки на метод buy
-        pass
+        #pass
 
     def test_product_buy_more_than_available (self, product): #пытаемся купить больше, чем доступно
+        with pytest.raises(ValueError):
+            product.buy(3000)
         # TODO напишите проверки на метод buy,
         #  которые ожидают ошибку ValueError при попытке купить больше, чем есть в наличии
         pass

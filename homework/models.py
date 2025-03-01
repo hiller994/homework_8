@@ -1,5 +1,5 @@
 #quantity of requested products
-QUANTITY_OF_REQUESTED_PRODUCTS = 999 #количество запрашиваемой продукции
+QUANTITY_OF_REQUESTED_PRODUCTS = 800 #количество запрашиваемой продукции
 
 #@dataclass #dataclass говорит, что абстракция USERS это абстракция над данными, а если это данные, мы можем совершать операции (и не нужно писать функции сравнения и т.п.)
 class Product:
@@ -23,16 +23,23 @@ class Product:
         TODO Верните True если количество продукта больше или равно запрашиваемому
             и False в обратном случае
         """
-        raise NotImplementedError
+        raise NotImplementedError #Команда raise в Python используется для принудительного вызова исключения
 
     def buy(self, quantity): #покупка - вычитает какое-то кол-во товара, которое лежит на складе
+        #ValueError — операция или функция получает аргумент неподходящего значения. К примеру, исключение возникает, если попытаться преобразовать строку в число.
+
+        if self.check_quantity(quantity): #если выполняются условия функции
+            self.quantity -= quantity # то количество товара на складе уменьшается на количество купленного товара
+            return self.quantity
+        else:
+            raise ValueError (f"Недостаточно товара на складе. Запрошено: {quantity}, доступно: {self.quantity}")
+
         """
         TODO реализуйте метод покупки
             Проверьте количество продукта используя метод check_quantity
             Если продуктов не хватает, то выбросите исключение ValueError
         """
-        raise NotImplementedError
-
+        #raise NotImplementedError
     #def __hash__(self):
     #   return hash(self.name + self.description)
 
@@ -51,6 +58,11 @@ class Cart:
         self.products = {}
 
     def add_product(self, product: Product, buy_count=1):
+        if product.name in self.products:  # если продукт есть в корзине
+            self.products[product.name] += buy_count #то мы добавляем товар
+        else:
+            self.products[product.name] = QUANTITY_OF_REQUESTED_PRODUCTS #добавляем новую запись в словать
+
         """
         Метод добавления продукта в корзину.
         Если продукт уже есть в корзине, то увеличиваем количество
