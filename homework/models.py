@@ -57,17 +57,17 @@ class Cart:
         # По-умолчанию корзина пустая
         self.products = {}
 
-    def add_product(self, product: Product, buy_count=1):
-        if product.name in self.products:  # если продукт есть в корзине
-            self.products[product.name] += buy_count #то мы добавляем товар
+    def add_product(self, product: Product, buy_count=1) ->None:
+        if self.products.get(product):  # если продукт есть в корзине
+            self.products[product] += buy_count #то мы добавляем товар
         else:
-            self.products[product.name] = QUANTITY_OF_REQUESTED_PRODUCTS #добавляем новую запись в словать
+            self.products[product] = buy_count #добавляем новую запись в словать
 
         """
         Метод добавления продукта в корзину.
         Если продукт уже есть в корзине, то увеличиваем количество
         """
-        raise NotImplementedError
+        #raise NotImplementedError
 
     def remove_product(self, product: Product, remove_count=None):
         """
@@ -75,13 +75,22 @@ class Cart:
         Если remove_count не передан, то удаляется вся позиция
         Если remove_count больше, чем количество продуктов в позиции, то удаляется вся позиция
         """
-        raise NotImplementedError
+        if remove_count is None:
+            del self.products[product]
+        else:
+            self.products[product] -= remove_count
+        #raise NotImplementedError
 
     def clear(self): #очистить всю корзину
-        raise NotImplementedError
+        self.products = {}
+        #raise NotImplementedError
 
     def get_total_price(self) -> float: #можешь посчитать цену всех товаров в корзине
-        raise NotImplementedError
+        total_price = 0 #изначальный итог 0
+        for product, quantity in self.products.items(): #для каждого продукта из словаря
+            total_price += product.price * quantity  #складывается цену продуктов, записывая в переменную total_price
+        return total_price
+        #raise NotImplementedError
 
     def buy(self): #можем купить все товары в корзине
         """
@@ -89,4 +98,11 @@ class Cart:
         Учтите, что товаров может не хватать на складе.
         В этом случае нужно выбросить исключение ValueError
         """
-        raise NotImplementedError
+        for product, quantity in self.products.items():
+            if product.quantity < quantity:
+                raise ValueError("Такого кол-во товара нет в наличии")
+
+        for product, quantity in self.products.items():
+            product.buy(quantity)
+
+        self.products.clear()
