@@ -13,7 +13,7 @@ def product(): #сам продукт
 
 @pytest.fixture
 def product2(): #сам продукт
-    return Product("Milk", 50, "This is a book", 100)
+    return Product("Milk", 50, "This is a Milk", 100)
 
 @pytest.fixture
 def cart():
