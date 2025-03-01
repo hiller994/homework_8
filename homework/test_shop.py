@@ -29,23 +29,18 @@ class TestProducts:
     def test_product_check_quantity(self, product): #проверяем кол-во
         assert product.check_quantity(QUANTITY_OF_REQUESTED_PRODUCTS)
         # TODO напишите проверки на метод check_quantity
-        #pass
 
     def test_product_buy(self, product): #пытаемся купить продукт
         in_stock = product.quantity
         product.buy(QUANTITY_OF_REQUESTED_PRODUCTS)
         assert product.quantity == in_stock - QUANTITY_OF_REQUESTED_PRODUCTS
-        print(product.quantity)
-        print(in_stock - QUANTITY_OF_REQUESTED_PRODUCTS)
         # TODO напишите проверки на метод buy
-        #pass
 
     def test_product_buy_more_than_available (self, product): #пытаемся купить больше, чем доступно
         with pytest.raises(ValueError):
             product.buy(3000)
         # TODO напишите проверки на метод buy,
         #  которые ожидают ошибку ValueError при попытке купить больше, чем есть в наличии
-        pass
 
 
 class TestCart: #тест корзины
@@ -80,7 +75,6 @@ class TestCart: #тест корзины
         quantity2 = 20  # Количество второго продукта
         cart.add_product(product, buy_count=quantity1)
         cart.add_product(product2, buy_count=quantity2)
-
         assert cart.get_total_price() == 2000 # общая цена, пересчитать руками (100 * 10) + (50 * 20) = 1000 + 1000 = 2000
 
     def test_buy(self, cart, product,  product2): # купить все товары в корзине
