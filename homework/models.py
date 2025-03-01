@@ -35,6 +35,9 @@ class Product:
             Если продуктов не хватает, то выбросите исключение ValueError
         """
 
+    def __hash__(self):
+        return hash(self.name + self.description)
+
 class Cart:
     """
     Класс корзины. В нем хранятся продукты, которые пользователь хочет купить.
