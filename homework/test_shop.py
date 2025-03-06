@@ -18,18 +18,20 @@ def cart():
 
 
 class TestProducts:
-    def test_product_check_quantity(self, product): #проверяем кол-во
-        assert product.check_quantity(QUANTITY_OF_REQUESTED_PRODUCTS)
-        # TODO напишите проверки на метод check_quantity
+    def test_product_check_quantity(self, product): # проверяем кол-во
+        assert product.check_quantity(product.quantity - 1) is True
+        assert product.check_quantity(product.quantity) is True
+        assert product.check_quantity(product.quantity + 1) is False
+
 
     def test_product_buy(self, product): #пытаемся купить продукт
         in_stock = product.quantity
         product.buy(QUANTITY_OF_REQUESTED_PRODUCTS)
         assert product.quantity == in_stock - QUANTITY_OF_REQUESTED_PRODUCTS
 
-    def test_product_buy_more_than_available (self, product): #пытаемся купить больше, чем доступно
+    def test_product_buy_more_than_available (self, product): # пытаемся купить больше, чем доступно
         with pytest.raises(ValueError):
-            product.buy(3000)
+            product.buy(product.quantity + 1)
 
 
 class TestCart: # тест корзины
@@ -48,12 +50,14 @@ class TestCart: # тест корзины
         cart.remove_product(product, remove_count=2)
         assert cart.products[product] == 1
 
-    def test_remove_product2(self, cart, product):
-        # удалили частично (добавили 3, удалили 3)
+    def test_remove_product2(self, cart, product, product2):
+        # удалили частично (добавили несколько товаров и удаляем только 1 тип)
         add_count = 3
         cart.add_product(product, buy_count=add_count)
-        cart.remove_product(product, remove_count=3)
-        assert product not in cart.products
+        cart.add_product(product2, buy_count=add_count)
+        cart.remove_product(product2, remove_count=3)
+        assert cart.products[product] == 3
+        assert product2 not in cart.products
 
     def test_remove_product3(self, cart, product):
         # удалили без количества (добавили 3, удалили)
