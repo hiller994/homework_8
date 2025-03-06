@@ -32,7 +32,7 @@ class Product:
             self.quantity -= quantity # то количество товара на складе уменьшается на количество купленного товара
             return self.quantity
         else:
-            raise ValueError (f"Недостаточно товара на складе. Запрошено: {quantity}, доступно: {self.quantity}")
+            raise ValueError (f"Недостаточно товара: {self.name} на складе. Запрошено: {quantity}, доступно: {self.quantity}")
 
         """
         TODO реализуйте метод покупки
@@ -75,10 +75,10 @@ class Cart:
         Если remove_count не передан, то удаляется вся позиция
         Если remove_count больше, чем количество продуктов в позиции, то удаляется вся позиция
         """
-        if remove_count is None:
-            del self.products[product]
+        if remove_count is None or remove_count >= self.products[product] : #Если remove_count больше или равен количеству продукта в корзине,
+            del self.products[product] # всё удаляем
         else:
-            self.products[product] -= remove_count
+            self.products[product] -= remove_count # в остальных случаях просто уменьшаем кол-во товара
         #raise NotImplementedError
 
     def clear(self): #очистить всю корзину

@@ -1,8 +1,7 @@
 #Полиморфизм
 import csv
-from symtable import Class
 
-from models.users import User, Status
+from lecture.models.users import User, Status
 
 
 #создание класса для получения данных
