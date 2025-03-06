@@ -15,6 +15,7 @@ class Product:
     def check_quantity(self, quantity) -> bool:
         return quantity <= self.quantity
 
+
     def buy(self, quantity):
         if self.check_quantity(quantity): #если выполняются условия функции
             self.quantity -= quantity # то количество товара на складе уменьшается на количество купленного товара
